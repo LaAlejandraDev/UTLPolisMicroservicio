@@ -1,0 +1,117 @@
+<div className="container">
+            <SideBar activeSection="gestion-horarios-salas" />
+            <div className="content">
+                <h1>Gestión de Horarios y Salas</h1>
+                <p>Bienvenido a la sección de gestión de horarios y salas. Aquí puedes crear, editar y eliminar horarios para las salas de cine.</p>
+
+                <div className="container py-5">
+                    <div className="row">
+                        {/* Formulario para crear un nuevo horario */}
+                        <div className="col-md-6 mb-4">
+                            <div className="card shadow-sm">
+                                <div className="card-header bg-primary text-white">
+                                    <h5>Gestión de Horarios de Salas</h5>
+                                </div>
+                                <div className="card-body">
+                                    <form>
+                                        <div className="mb-3">
+                                            <label htmlFor="horarioProyeccion_id" className="form-label">ID Horario Proyección</label>
+                                            <input
+                                                value={horarioProyeccion_id}
+                                                className="form-control"
+                                                type="number"
+                                                id="horarioProyeccion_id"
+                                                placeholder="1, 2, 3..."
+                                                onChange={(e) => setHorarioProyeccion_id(e.target.value)}
+                                                disabled
+                                            />
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <label htmlFor="salaHorario_id" className="form-label">Sala</label>
+                                            <select
+                                                value={salaHorario_id}
+                                                className="form-select"
+                                                id="salaHorario_id"
+                                                onChange={(e) => setSalaHorario_id(e.target.value)}
+                                            >
+                                                <option value={''} disabled>Selecciona la sala</option>
+                                                {salas.map((sala) => (
+                                                    <option key={sala.sala_id} value={sala.sala_id}>{sala.sala_id}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <label htmlFor="proyeccion_id" className="form-label">Proyección</label>
+                                            <select
+                                                value={proyeccion_id}
+                                                className="form-select"
+                                                id="proyeccion_id"
+                                                onChange={(e) => setProyeccion_id(e.target.value)}
+                                            >
+                                                <option value={''} disabled>Selecciona la proyección</option>
+                                                {proyecciones.map((proyeccion) => (
+                                                    <option key={proyeccion.proyeccion_id} value={proyeccion.proyeccion_id}>{proyeccion.proyeccion_id}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+
+                                        <div className="mb-3">
+                                            <label htmlFor="horarioProyeccion_fechaHora" className="form-label">Fecha y Hora de Proyección</label>
+                                            <input
+                                                value={horarioProyeccion_fechaHora}
+                                                className="form-control"
+                                                type="datetime-local"
+                                                id="horarioProyeccion_fechaHora"
+                                                onChange={(e) => setHorarioProyeccion_fechaHora(e.target.value)}
+                                            />
+                                        </div>
+
+                                        <button type="button" className="btn btn-primary" onClick={crearNuevoHorario}>Registrar Horario</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Lista de horarios */}
+                        <div className="col-md-6">
+                            <div className="card shadow-sm">
+                                <div className="card-header bg-info text-white">
+                                    <h5>Lista de Horarios</h5>
+                                </div>
+                                <div className="card-body">
+                                    <table className="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Película</th>
+                                                <th>Fecha y Hora</th>
+                                                <th>Sala</th>
+                                                <th>Estatus</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {horariosList.map((horario) => (
+                                                <tr key={horario.horarioProyeccion_id}>
+                                                    <td>{horario.horarioProyeccion_id}</td>
+                                                    <td>{horario.pelicula_nombre}</td>
+                                                    <td>{new Date(horario.horarioProyeccion_fechaHora).toLocaleString()}</td>
+                                                    <td>{horario.sala_id}</td>
+                                                    <td>{horario.horarioProyeccion_estatus === 1 ? 'Activo' : 'Inactivo'}</td>
+                                                    <td>
+                                                        <button className="btn btn-info btn-sm mx-1">Editar</button>
+                                                        <button className="btn btn-danger btn-sm mx-1" onClick={() => eliminarHorario(horario.horarioProyeccion_id)}>Eliminar</button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
